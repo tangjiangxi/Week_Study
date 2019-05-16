@@ -1,0 +1,86 @@
+
+创建创库
+生成公钥与私钥：ssh-keygen -t rsa -C "1591226504@qq.com"  简单暴力enter到底
+查看公钥;$ cat ~/.ssh/id_rsa.pub
+
+
+项目保存桌面  
+可以在git中切换目录   cd目录
+输入git clone git@gitee.com:tangjiangxi/Travel.git（选择的时候是ssh）  这里的意意思是把线上代码clone到本地目录中
+
+创建一个vue项目 
+控制台：
+node可以安装其他盘里面  不过在安装全局变量的时候  需要配置全局变量
+输入命令：npm install --global vue-cli  安装vue-cli
+创建项目的时候用手机热点会快一点
+输入命令创建项目：vue init webpack my-project(创建一个基于webpack打包工具的vue项目)  my-project(表示项目要放的文件位置)
+cd Travel(文件夹)
+npm run dev 得出运行网址。
+
+线下创建了许多新的文件 我们需要把他推入git线上
+git status
+git add .  把增加的文件添加到本地git的缓冲区
+git commit -m "project initialized" 这里它想知道你是谁  输入在执行 git config --global user.email "1591226504@qq.com"
+git push
+
+npm install fastclick --save 安装点击快速事件
+
+
+vue——解决错误的方法
+You may use special comments to disable some warnings. 
+Use // eslint-disable-next-line to ignore the next line. Use 
+/* eslint-disable */ to ignore all warnings in a file. ”
+在build/webpack.base.conf.js文件中，注释或者删除掉：module->rules中有关eslint的规则
+
+
+npm audit ： npm@5.10.0 & npm@6，允许开发人员分析复杂的代码，并查明特定的漏洞和缺陷。
+npm audit fix ：npm@6.1.0,  检测项目依赖中的漏洞并自动安装需要更新的有漏洞的依赖，而不必再自己进行跟踪和修复。
+
+
+安装npm install stylus --save
+npm install stylus-loader --save
+
+git的分支管理
+git pull 把线上的分支拉倒本地上来
+git checkout index_swiper    本地所在的分支就是index_swiper了
+可以利用git status查看
+
+
+
+模拟去哪儿的轮播编写
+寻找轮播插件：
+github上查找
+vue-awesome-swiper  可以用来是用来使用
+npm install vue-awesome-swiper@2.6.7 --save 安装版本号为2.6.7
+npm工具会自动的去安装这个插件
+全局使用  尽量来全局引入
+应用方法
+main.js中操作   其实在GitHub上面有使用的方法
+import Vue from 'vue'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
+import 'swiper/dist/css/swiper.css'
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
+
+
+这里有一种实现图片的宽高比例方法
+    .wrapper
+        overflow hidden
+        width 100px
+        height 0
+        padding-bottom :31.25%  //这里不直接在height设置为31.25%的原因是，如果在height设置的话 它会根据父级来计算  不会再本级利用weight来计算
+	background #eee//可以让图片没有加载出来的是后 背景为灰色           
+	.swiper_img
+            width 100%
+这样写的目的是防止网速差的时候加载图片出现抖动的情况
+
+-------------------------------------------------
+分支项目做完之后的合并git命令：
+git add .
+git commit -m 'change'
+git push
+这个时候把本地分支的内容放在了线上的分支上
+现在把分支上的内容合并到master分支上上
+git checkout master 
+git marge orgin/index_swiper  切换到master的分支上   在把线上index_swiper的分支合并到线上master分支上
+git push  //把线下master的内容也提交到线上
+-------------------------------------------------------------
