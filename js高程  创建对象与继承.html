@@ -1,0 +1,228 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>js高程  创建对象与继承</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><p>日常开发的继承更多的偏向使用函数创建类继承。js中，在高程里有创建和继承类的六种方法，<strong>重点看构造函数创建属性和原型上创建方法</strong>，至于为什么自己研究下，主要核心是为了实现继承。另外日常开发我们习惯使用es6的class实现类和继承。额外的，设计模式，发布订阅模式额外看一看，开发中常使用自己封装的发布订阅进行事件注册监听调用销毁</p>
+<h2><a id="6_3"></a>创建对象6种方式和继承</h2>
+<p><strong>js高程144-161</strong><br>
+<strong>1. 工厂模式</strong>：在ECMAscript中 无法创建像java中的类，js开发人员发明了一种函数，用函数来封装以特定接口创建对象的细节。</p>
+<pre><code>function createPerson(name,age,job){
+	var o=new Object();
+	o.name=name;
+	o.age=age;
+	o.job=job;
+	o.sayName=function(){
+	alert("this.name");
+	};
+return o;
+}
+</code></pre>
+<p>工厂模式虽然解决了创建多个像是对象的问题，但却没有对象识别的问题（即知道一个对象的类型）。<br>
+自我理解：能够对对个相似对象进行封装，但是对于对象类型的识别是没有解决的。</p>
+<p><strong>2. 构造函数模式</strong></p>
+<pre><code>function  Person(name,age,job){
+	this.name=name;
+	this.age=age;
+	this.job=job;
+	this.sayName=function()
+	alert(this.name);
+	}
+}
+var person1=new Person("tang","99","student");
+</code></pre>
+<p>与工厂模式相比，么有显示创建对象，直接将属性和方法赋值给了this对象，也没有return语句。<br>
+注：在创建够着函数的时候，首字母尽量大写，起到与其他函数区别的作用，便于看出这是够着函数。</p>
+<p>构造函数的问题：每个方法都要在每个实例上从新创建一遍。不同实例的同名函数是不相同的。为了解决这个问题，可以把函数提到外面，变成一个全局变量，但是这样有点问题，如果一个对象需要多个函数，我们不可能创建这么多的全局函数。这个问题由原型模式来解决。</p>
+<p><strong>3.原型模式</strong><br>
+前面介绍到过原型，本次用对象字面量表示：</p>
+<pre><code>function Person(){
+}
+Person.prototype={
+	name:"tangjiangxi",
+	age:99,
+	job:"student",
+	sayName:function(){
+		alert(this.name);
+		}
+}
+</code></pre>
+<p>原型对象可以为其属性设置类型，和属性。</p>
+<pre><code>Object.defineProperty("原型"，“原型中的对象”，{
+	一些设置。。。。。
+	enumerable:false, //原型中的对象 可不可以枚举
+	value:Person;
+})；
+</code></pre>
+<p>原型对象所带来的问题：原型最大的问题是由其自身共享性质所导致的。特别是引用类型值的问题非常突出。创建两个实例，第一个实例对数据进行修改，比如像数组中添加一项，由于实际数组时存在于原型中的，所以更改会在第二个实例显示出来，然而第二个实例压根不需要这项更改，这样问题就非常明显了。<br>
+为了解决这个问题：组合使用构造函数与原型函数模式就派上了用场。<br>
+<strong>4.组合使用构造函数与原型函数模式</strong><br>
+利用构造函数定义实例属性，用原型模式定义方法和共享属性。</p>
+<pre><code>function Person(name,age,job){
+	this.name-=name;
+	this.age=age;
+	this.job=job;
+	this.frients=["wujia","tangfuwan"]
+}
+Person.prototype={
+	constructor:Person,
+	sayName:function(){
+		alert(this.name)
+ 	}
+}
+</code></pre>
+<p>这样的设计模式很好的解决了原型模式所带来的困扰。<br>
+<strong>5.动态原型模式</strong><br>
+他把所有的内容都封装在构造函数中，在构造函数中初始化原型，在构造函数中添加一个判断，用来检查某个应该存在的方法是否有效。</p>
+<pre><code>if(typeof this.sayName!==''function'){
+	Person.prototpe.sayName=function(){
+		..........
+	}
+}
+</code></pre>
+<p><strong>6.寄生构造函数</strong><br>
+这里于工厂模式有点相像，可以说一样的。<br>
+<strong>7.稳妥构造函数模式</strong><br>
+稳妥对象：指的是没有公共属性，而且其方法不引用this对象，稳妥对象最适合在一些安全的环境中（这些环境禁止使用this和new），或则防止数据被其他应用程序改动使用。</p>
+<pre><code>function Person(){
+	var o=new Object();
+	//这里可以添加一些私有属性
+	o.sayName=function(){
+	alert(name);
+}
+return o
+}
+</code></pre>
+<hr>
+<h2><a id="_113"></a>继承</h2>
+<p>继承只支持实现继承，不存在接口继承<br>
+<strong>1原型链</strong><br>
+基本思想，利用原型让一个引用类型继承另外一个引用类型的属性和方法。</p>
+<pre><code>function father(){
+	this.property=ture;
+};
+father.prototype.getFather=function(){
+	return this.property;
+};
+function son(){
+	this.subproperty=false;
+};
+son.prototype=new father();
+son.prototype.getSon=function(){
+	return tihs.subproperty;
+};
+var instance=new son();
+alert(insance.getFather());   //true
+</code></pre>
+<p>注意点：通过原型链实现继承时，不能使用对象字面量创建原型方法，因为这样会重写原型链。<br>
+原型链的问题:他也存在原型所存在的问题，当子类原型继承父类时（son.prototype=new father()），父类（father）中的对象就变成了原型对象，这也就会产生原型的问题了。</p>
+<p>这里在回顾下原型的问题：原型最大的问题是由其自身共享性质所导致的。特别是引用类型值的问题非常突出。创建两个实例，第一个实例对数据进行修改，比如像数组中添加一项，由于实际数组时存在于原型中的，所以更改会在第二个实例显示出来，然而第二个实例压根不需要这项更改，这样问题就非常明显了。</p>
+<p>原型链的第二问题：再创间子类实例的时候，不能像超类型的构造函数中传递参数，其实是没有办法在不影响其他实例的情况下，给超累的构造函数传参数。</p>
+<p><strong>2.借用构造函数</strong><br>
+技术思想：在子类的构造函数的内部调用超累的构造函数。这可以规避原型的问题</p>
+<pre><code>function SuperType(){
+	this.colors=['red','blue','green'];
+}
+function SubperType(){
+	SuperType.call(this);
+}
+var instance1=new SubType();
+instance1.colors..push("black");
+aler(instance1.colors)    //red,blue,green,black
+
+var instance2=new SubType();
+alert(istance2.colors)    //red,blue,green
+</code></pre>
+<p><strong>3组合继承</strong><br>
+组合继承，有时候叫做伪装继承，指的是将原型链和借用构造函数的技术组合在一起，从而发挥二者之长的一种继承模式。<br>
+背后的思路：使用原型链实现对原型属性和方法的继承，通过构造函数来实现实例属性的继承。</p>
+<pre><code>function SuperType(name){
+	this.name=name;
+	this.colors=['blue','red'];
+}
+SuperType.prototype.sayName=function(){
+	alert(this.name);
+};
+function SubType(name,age){
+//继承属性
+	Supertype.call(this.name);
+	this.age=age;
+}
+//继承方法
+SubType.prototype=new SuperType();
+Subtype.protoType.costrustor=SubType;
+SubType.protoType.sayAge=function(){
+	alert(this.age);
+};
+var instance1=new SubType("tangjiangxi",20);
+instance.colors.push('black'); //blue red black
+instance.sayName()//   tangjiangxi
+instance.sayAge() //  20
+
+var instance2=new SubType("wujia",23);
+alert(insatnce2.colors.push("yellow"));   //blue red black
+instance2.sayName()  //wujia
+instance2.sayAge()  //23
+</code></pre>
+<p><strong>4原型式继承</strong><br>
+借助原型基于已有的对象创建新对象，同时还不必因此创建自定义类型。</p>
+<pre><code>function object(o){
+	function F(){   }
+	f.prototype=o;
+	return new F();
+}
+
+例子：
+var Person{
+	name:"tangjiangxi",
+	friends:['wujia','wentong','tangfuwan']
+}
+var one=object(Person);
+one.name="nihao";
+one.friends.push("rob");
+
+var two=object(Person);
+two.name="hahaha";
+two.friends.push("lixiangyang");
+
+alert(Person.friends);  //wujia   wentong   'tangfuwan  nihao  hahaha
+</code></pre>
+<p>es5增加了Object.create()方法规范化原始继承，方法接受两个参数：一个用作新对象原型的对象和一个为新对象定义额外属性的对象。</p>
+<pre><code> var person{
+	name:"tangjiangxi",
+	friends:['wujia','wentong','tangfuwan']
+}；
+var anoterPerson=Object.create(person,{
+	name:"grey"
+});
+alert(anoteherperson.name);  ///"grey"
+</code></pre>
+<p><strong>5寄生继承</strong><br>
+寄生继承的思路与寄生构造函数和工厂类似，即创建一个仅用于封装继承过程的函数，该函数在内部以某种方式来增强对象，最后在像真的是它做了所有工作一样返回。</p>
+<pre><code>function createAnother(original){
+	var clone=object(orginal); //通过调用函数创建一个新对象
+	clone.sayHi=function(){  //以某种方式来增强这个对象
+	alert("hello");
+	};
+	return clone;   //返回这个函数
+}
+</code></pre>
+<p><strong>6寄生组合继承</strong><br>
+所谓寄生组合继承，即通过借用构造函数来继承属性，通过原型链的混成形式来继承方法。<br>
+基本模式：</p>
+<pre><code>functioninheritprotoType(subType,suerType){
+	var prototype=object(superType.prototype);
+	protype.construstor=subType;
+	subtype.peototype=prototype；
+}
+</code></pre>
+</div>
+</body>
+
+</html>

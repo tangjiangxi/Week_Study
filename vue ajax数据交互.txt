@@ -1,0 +1,62 @@
+使用anxios
+vue 项目中安装
+npm install axios --save
+发送ajax的时候 尽量用最少的次数 拿到最多的数据， 一般在首页建立ajax请求
+在主页中使用ajax请求  可以传给各个组件，所以尽量在主页发起ajax请求
+
+引入ajax
+回忆一下生命周期函数：
+8个阶段
+beforeCreate 创建前
+created  创建后
+beforeMount 载入前
+mounted 载入后
+beforeUpdate  更新前
+updated  更新后
+beforeDestroy 销毁前
+destroyed 销毁后
+---------------------------------------------------------------
+在整个vue项目工程下面  只有static目录中的内容可以被外部访问（localhost:8080/static）
+如果本地模拟内容不想提交到线上，可以在gitignore文件中配置static/mock(文件目录)
+开发环境中书写路径为/api开头是有一定风险的  我们需要一个转发机制，将api下的json转发到本地的文件夹下面
+config/index.js提供了这个功能  该功能可以让我们进行配置。
+   proxyTable: { 
+      '/api':{
+        target:'http://localhost:8080',
+        pathRewrite:{
+          '^/api':'/static/mock'
+        }
+      }
+    },
+
+
+简单实现代码：
+    data () {
+        return{
+            city:'',
+            swiperList:[],
+            iconList:[],
+            recommendList:[],
+            weekendList:[]
+        }
+    },
+    mounted(){
+        this.getHomeInfo();
+    },
+    methods:{
+        getHomeInfo () {
+            axios.get('/api/index.json')
+                .then(this.getHomeInfoSucc)
+        },
+        getHomeInfoSucc(res){    
+            res=res.data
+            if(res.ret && res.data){  
+                const data=res.data
+                this.city=data.city
+                this.swiperList=data.swiperList
+                this.iconList=data.iconList
+                this.recommendList=data.recommendList
+                this.weekendList=data.weekendList
+                }
+            }
+        },
