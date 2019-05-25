@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <title>简单的vue</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    </head>
+    <body>
+        <div id="app">{{content}}</div>
+        <script>
+            // var dom=document.getElementById("app");
+            // dom.innerHTML="tangjiangxi";
+            var app=new Vue({
+                el:"#app",
+                data:{
+                    content:"tangjaingxi"
+                }
+            })
+            setTimeout(
+                // 箭头函数的写法  是es6里面的东西
+            //     () => {
+            //     app.$data.content='bye world'
+            // }
+            function(){
+                app.$data.content="老子帅的一匹"
+            }
+            , 2000);
+        </script>
+    </body>
+</html>

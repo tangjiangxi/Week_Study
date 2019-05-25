@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <!-- <style>
+        .activated{
+            color: red;
+        }  
+    </style> -->
+</head>
+<body>
+    <div id="app">
+        <!--:style="[styleObj]"这里可以写成是数组形式  这有数据中的对象来改变样式   :style="styleObj"  注意驼峰命名法-->
+         <div :style="[styleObj,{fontSize:'40px'}]" @click="handleDivClick">
+             hello world
+         </div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                styleObj:{
+                    color:"red"
+                }
+            },
+            methods:{
+                handleDivClick:function(){
+                    this.styleObj.color=this.styleObj.color==="red"?"blue":"red";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

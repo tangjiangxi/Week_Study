@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <style>
+        /* 最初状态   动画第一针的时候就存在  当第二针动画开始  他就会被移除 */
+        /* 以fade开头是由于动画中定义的名字为fade  如果没有name默认的前缀就是v   v-enter */
+        .fade-enter{
+            opacity: 0;
+        }
+        /* 动画过程  到动画结束才移除 */
+        .fade-enter-active{
+            transition: opacity 3s;
+        }
+        /* 当开始执行的时候才加入leave-to  同时加入动画  leave-to一直存在 知道最后才取消 */
+        .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- 利用transition标签包裹表示拥有动画效果 -->
+        <transition name="fade">
+            <div v-if='show'>hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                show:true
+            },
+            methods:{
+                handleClick:function(){
+                    this.show=!this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <div id="app">
+        <counter @click="changeClick" ref="one"></counter>
+        <counter @click="changeClick" ref="two"></counter>
+        <div>{{total}}</div>
+        <!-- <div ref="hello" @click="handle">hello world</div> -->
+    </div>
+    <script>
+        Vue.component('counter',{
+            template:'<div @click="handle">{{number}}</div>',
+            data:function(){
+                return{
+                    number:0
+                }
+            },
+            methods:{
+                handle:function(){
+                    this.number++
+                    this.$emit('changeClick')
+                }
+            }
+        })
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                total:0
+            },
+            methods:{
+                changeClick: function(){
+                    this.total=this.refs.one.number+this.refs.two.number
+                }
+                // handle:function(){
+                //     alert(this.$refs.hello.innerHTML)
+                // }  
+            }
+
+        })
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

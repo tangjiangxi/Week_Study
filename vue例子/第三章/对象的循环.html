@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 对象循环三个参数  key键 item值 index索引-->
+        <!-- 增加页面数据   和数组一样  不能直接给对象加数据 可以以改变引用的方式来改变页面的值
+              vm.userInfo={更改引用对象的新对象} 如果直接 m层的数据是发生改变 但页面的数据时不会发生改变的
+            如vm.userinfo.address='beijing' 这条数据是不会出现在页面的-->
+            <!-- 可以用Vue.set方法想对象中增加数据来改变页面的数据 (控制台输入)
+            即是一个全局的方法 也是一个实例方法 Vue.set(vm.userInfo,'address','beijing')
+            vm.$set(vm.userInfo,'adddd','tangjiangxiyayaya')
+         -->
+        <div v-for="(item,key,info) of userInfo">
+            {{item}}---{{key}}----{{info}}
+        </div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                userInfo:{
+                    name:'tangjiangxi',
+                    age:'23',
+                    genner:'male',
+                    alary:'secret'
+                }
+            }
+        })
+    </script>
+</body>
+</html>

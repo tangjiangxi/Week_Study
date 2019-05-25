@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <style>
+        .v-enter,v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active,v-leave-active{
+            transition: opacity 3s
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- mode="in-out"这里表示的是显示与隐藏的顺序 -->
+        <transition>
+            <!-- 自定义组件 -->
+            <!-- is关联控制数据 -->
+            <component :is="type"></component>
+            <!-- 
+            <child v-if="show"></child>
+            <child-one v-else></child-one>
+             -->
+
+
+
+
+            <!-- 当这两者在进行切换的时候  它会尽量的去复用之前的dom 导致动画执行不了 可以设置key值来解决这种bug-->
+            <!-- <div v-if="show" key="hello">简单粗暴</div>
+            <div v-else key="bye">就是这么强大</div> -->
+        </transition>
+        <button v-on:click="handleClick">切换</button>
+    </div>
+    <script>
+        Vue.component('child',{
+            template:'<div>child</div>'
+        })
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        })
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                // show:true
+                type:'child'
+            },
+            methods:{
+                handleClick:function(){
+                    // this.show=!this.show
+                    this.type=this.type==="child"?"child-one":'child';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

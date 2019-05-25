@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <counter :counter="3" @isc="chnaggeClick"></counter>
+        <counter :counter="2" @isc="chnaggeClick"></counter>
+        <div>{{total}}</div>
+    </div>
+    <script>
+        var counter={
+            props:['counter'],
+            data:function(){
+                return{
+                    number:this.counter
+                }
+            },
+            template:'<div @click="handleClick">{{number}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.number+=2
+                    this.$emit("isc",2)
+                }
+            }
+        }
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                total:5
+            },
+            components:{
+                counter:counter
+            },
+            methods:{
+                chnaggeClick:function(step){
+                    this.total+=step
+                }
+            }
+        })
+    </script>
+</body>
+</html>

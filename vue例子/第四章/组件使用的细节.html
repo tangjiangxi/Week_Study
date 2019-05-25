@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <table>
+            <!--<row></row>
+                <row></row>
+                <row></row>
+                当直接使用容我的时候 我们会发现这里的容我会和tbody同级  由于h5里面的规定导致的原因 row  控制台查看
+                当用is属性就可以解决这个bug 写法如下
+            
+        ul 和 ol select标签也会出现这种情况  所以说 有时红藕用到is属性是对的 -->
+            <tbody>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+                <tr is="row"></tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // 在子主键中定义的数据在定义的时候 不能定义为对象，只能定义为函数返回值  这能让各自的子组件不予其他的产生冲突
+        // 写为对象的时候是不可取的 如这样写data{ content:this is a row}
+        Vue.component("row",{
+            data:function(){
+                return{
+                    content:'this is a row'
+                }
+            },
+            template:"<tr>{{content}}</tr>"
+        })
+        var vm=new Vue({
+            el:"#app",
+            
+        })
+    </script>
+</body>
+</html>

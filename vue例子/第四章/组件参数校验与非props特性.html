@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>组件的参数校验</title>
+</head>
+<body>
+    <!-- 参数校验  从父组件传入的参数 在子组件中会进行约束 -->
+    <div id="app">
+        <child content="hello world"></child>
+    </div>
+    <script>
+        Vue.component('child',{
+            props:{
+                // 这里对传入的参数进行校验  是否是字符类型
+                // content:[Number,String] //传入的是否是数字与字符串
+                // 还可以这样写  检验
+                // content:{
+                // type:String
+                // require:true   表示必传  false表示不必传
+                // default:'default value'  如果require为falase 这样的话会默认content的值为default所对应的值
+                // validator:function(value){   这里校验传入的值的长度大于5 如果满足发挥true  校验通过   如果返回false这样会报错
+                //     return (value.length>5)
+                // }
+                // }
+                content:String
+            },
+            template:'<div>{{content}}</div>'
+        })
+        var vm=new Vue({
+            el:'#app',
+        })
+    </script>
+</body>
+</html>

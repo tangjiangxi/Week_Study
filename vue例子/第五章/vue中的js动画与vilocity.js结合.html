@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="../第五章/vilocity.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!--动画入场用enter  动画出场用leave   绑定事件@before-leave @leave @after-leave-->
+        <transition
+            name="fade"
+            @before-enter="handleBeforeEnter"
+            @enter="handleEnter"
+            @after-enter="handleAfterEnter"
+        >
+        <div v-show="show">hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                show:true
+            },
+            methods:{
+                handleClick:function(){
+                    // this.show=!this.show
+                },
+                handleBeforeEnter:function(el){
+                    el.style.opacity=0;
+                    // el.style.color="red" 
+                },
+                handleEnter:function(el,done){
+                    Velocity(el,{
+                        opacity:1
+                    },{
+                        duration:1000,
+                        complete:done
+                    })
+                    // setTimeout(()=>{
+                    //    el.style.color="green"
+                    // },2000)
+                    // setTimeout(()=>{
+                    //     done()
+                    // },4000)
+                },
+                handleAfterEnter:function(el){
+                    alert("动画结束")
+                    // el.style.color="black"
+                }
+            }
+        })
+    </script>
+</body>
+</html>

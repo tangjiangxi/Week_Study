@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{fullName}}
+        {{age}}
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                firstName:'jiangxi',
+                lastName:'tang',
+                age:28,
+                fullName:"jiangxi tang"
+            },
+
+            // 计算属性表  计算属性是内置缓存的   这里的缓存的意思是当firstnamey与lastname没有发生改变的是 fullname就不会发生改变 
+            // 当他依赖的值发生变化的时候  计算属性会计算一次  比如firstname发生改变的时候  这是就会从新计算一遍
+            // 可以在控制台改变他的依赖值  vm.firstname="tangjiangxi8888"
+            // computed:{
+            //     fullName:function(){
+            //         console.log("计算了一次");
+            //         return this.firstName+" "+this.lastName;
+            //     }
+            // },
+
+            // 方法的时候   缓存机制是不存在不的    页面从新渲染的换  他还是会执行一次
+            // methods:{
+            //     fullName:function(){
+            //         console.log("代码执行一次");
+            //         return this.firstName+" "+this.lastName;
+            //     }
+            // }
+                
+            // 监听器   监听firstnaem 和lastname   当发生改变的时候就会执行function
+            // 当与fullname不相关的发生改变的时候  后面的是不会执行的   不会变化的
+            // 也具备缓存功能   大事比较麻烦  但是如果用computed能够解决的事  尽量用computed来解决
+            watch:{
+                firstName:function(){
+                    console.log("计算一次");
+                    this.fullName=this.firstName+" "+this.lastName
+                },
+                lastName:function(){
+                    console.log("计算一次");
+                    this.fullName=this.firstName+" "+this.lastName
+                }
+            }
+
+        });
+    </script>
+</body>
+</html>

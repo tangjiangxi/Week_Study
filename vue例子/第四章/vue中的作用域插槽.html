@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <child>
+            <!-- props接受子组件中传过来的数据（item） -->
+            <!-- 作用域插槽 必须是template开始于结尾的内容  插槽要声明接受的数据（数据都放在props）
+                在位自子组件添加一个模板信息  下面是以一h1标签的形式展示
+                当子组件做循环  它的dom部分由外部决定的时候 就会用到作用域插槽
+             -->
+            <tenplate slot-scope="props">
+                <h1>{{props.item}}</h1> 
+            </tenplate>
+        </child>
+    </div>
+    <script>
+        Vue.component('child',{
+            data:function(){
+                return{
+                    list:[1,2,3,4,5,'tangjiangx']
+                }
+            },
+            // 这里是内部直接列表显示  但是在有时候不以列表显示  显示有外部控制
+            // template:'<div>\
+            //         <ul v-for="item in list">\
+            //             <li>{{item}}</li>\
+            //         </ul>\
+            //         </div>'
+
+            // 外部插槽控制显示样式
+            template:'<div>\
+                    <ul>\
+                        <slot v-for="item in list" :item=item>\
+                        </slot>\
+                    </ul>\
+                    </div>'
+        })
+        var vm=new Vue({
+            el:'#app',
+        })
+    </script>
+</body>
+</html>

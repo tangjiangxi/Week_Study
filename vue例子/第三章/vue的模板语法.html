@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 在vue中我们把这种语法叫做差值表达式  差值表达式的形式以两个花括号表示 -->
+        <!-- {{name}} -->
+        <!-- v-text指的是把该标签的innertext变为name对应的值 -->
+        <!-- 差值表达式与v-text的效果一样 -->
+        <!-- 指令后面都是指向的js表达式 -->
+        <div>{{name}}</div>
+        <div v-text="name+'tangjianxgi'"></div>
+        <div v-html="name"></div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                name:"<h1>tangjiangxi</h1>"
+            }
+        })
+    </script>
+</body>
+</html>

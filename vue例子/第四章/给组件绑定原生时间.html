@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 这样绑定的时间是不会被执行的  控制太运行查看结果 -->
+        <child @click="handleClick1"></child>
+        <!--监听的是原生组件 .native修饰符就可以绑定原生事件-->
+        <child2 @click.native="handleClick2"></child2>
+    </div>
+    <script>
+        Vue.component('child',{
+            // 这样绑定时间才会被执行   
+            template:'<div @click="handleClick">child</div>',
+            methods:{
+                handleClick:function(){
+                    alert("tangjiangxi")
+                    // 要想触发父组件的时间   需要向上传递
+                    this.$emit('click')
+                }
+            }
+        })
+        // 第二个组件可以 
+        Vue.component('child2',{
+            template:'<div>child2</div>'
+        })
+        var vm=new Vue({
+            el:"#app",
+            methods:{
+                handleClick1:function(){
+                    alert("tangjiangxi111")
+                },
+                handleClick2:function(){
+                    alert('tangjiangxi22222')
+                }
+            }
+        })
+    </script>
+</body>
+</html>

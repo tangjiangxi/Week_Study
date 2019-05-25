@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 两者是有区别的 v-if是控制这个标签是否存在  而v-show是控制它的style属性  display  v-show的性能相对于要高一些
+        这可以减少标签的创建与删除 -->
+        <!-- if 和 else两个标签是要贴在一起使用的 -->
+        <!-- <div v-if="show==='a'">{{message}}</div>
+        <div v-else-if="show==='b'">{{message2}}</div>
+        <div v-else="show==='c'">{{message3}}</div> -->
+        <!-- <div v-show="show" data-test="v-show">{{message}}</div> -->
+
+
+        <!-- 当在input中输入的时候 show进行切换 input中的内容还存在   由于切换时会复用页面上的dom 
+            这导致input被复用 所以输入的东西是存在的 设置key值可以消除这种情况-->
+        <div v-if="show">
+            用户名：<input key="username"/>
+        </div>
+        <div v-else>
+            邮箱名：<input key="emailname"/>
+        </div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                show:false,
+                message:'hello world',
+                message2:'hello world2',
+                message3:'hello world3'
+            }
+        })
+    </script>
+</body>
+</html>

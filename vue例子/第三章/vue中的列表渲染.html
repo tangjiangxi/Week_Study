@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 在每一个循环项上带一个key值是可以提高性能的  key值尽量唯一 -->
+        <!-- 注意我们不能利用list[4]={.....} 来改变数据  虽然数据时发生改变，但是页面上的数据是不会发生改变的
+              我们只能利用数组提供的方法来改变数据 list.push({...}) -->
+        <!-- 数值操作方法push pop  shift unshift splice slice reserve-->
+
+        <!-- 改变数据多的应用yekey8i改变页面数据 vm.list=[新引用的数组] -->
+        <!-- set方法也可以改变页面的数据 Vue.set(vm.list,2,{id:'3412234',text:"tangjiangxss"})
+             list数组的第三项改为{id:'3412234',text:"tangjiangxss"}  
+               vm.$set(vm.list,2,{id:'3412234',text:"tang"})-->
+        <div v-for="(item,index) of list" :key="item.id">
+            {{item.text}}---{{index}}
+        </div>
+        <template v-for="(item,index) of list" :key="item.id">
+            <div>{{item.text}}</div>
+            <span>{{item.text}}</span>
+        </template>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                list:[
+                {
+                    id:"0123",
+                    text:"hello"
+                },
+                {
+                    id:"1023023",
+                    text:"tang"
+                },
+                {
+                    id:"0231",
+                    text:"jiang"
+                },
+                {
+                    id:"231241",
+                    text:"xi"
+                }
+            ]
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <style>
+        .activated{
+            color: red;
+        }
+        .activated2{
+            font-size: 30px;
+        }
+        .activated1{
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- div元素有一个Class  Class的名字是activated  它的值取决于数据里面isactivated这个变量
+        设置它的值为true或者false这样可以控制其样式activated的显示与否  这里也叫做class的对象绑定
+        这里也可以直接绑定activated -->
+        
+        <!--   v-bind:class="[activated2]" data中的数据，  this.activated2="activated2" 把字符串赋值给activated2  
+        这让 [activated2]不在是指定的数据  这里可以导入style中的样式了-->
+        <div @click="handleDivClick"
+            v-bind:class="[activated2,activated1]"
+            v-bind:class="{activated:isActivated}"
+            >
+            hello world</div>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                isActivated:false,
+                activated2:'',
+                activated1:'',
+            },
+            methods:{
+                handleDivClick:function(){
+                    // this.isActivated=!this.isActivated;
+
+
+                    // if(this.activated2=="activated2" ){
+                    //     this.activated2="";
+                    // }else{
+                    //     this.activated2="activated2" 
+                    // }
+                    this.activated2=="activated2"?this.activated2="":this.activated2="activated2";
+                    this.activated1=="activated1"?this.activated1="":this.activated1="activated1";
+                }
+            }
+        })
+    </script>
+</body>
+</html>

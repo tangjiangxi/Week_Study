@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 
+        <child-one v-if="show==='childone'"></child-one>
+        <child-two v-if="show==='childtwo'"></child-two> 
+        -->
+
+        <!-- 换一种写法 动态组件-->
+        <template :is="show"></template>
+
+        <button @click="handleBtnClick">change</button>
+    </div>
+    <script>
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        })
+        Vue.component('child-two',{
+            template:'<div>child-two</div>'
+        })
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                show:'child-one'
+            },
+            methods:{
+                handleBtnClick:function(){
+                    this.show=this.show==='child-one'?'child-two':'child-one';
+                }
+            }
+        })
+    </script>
+</body>
+</html>

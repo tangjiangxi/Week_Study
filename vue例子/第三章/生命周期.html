@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        //生命周期是vue实例在某时间点会自动执行的函数
+        var vm=new Vue({
+            el:"#app",
+            data:{
+                test:'hello word'
+            },
+            // 如果没有模板就会吧el中的当做模板来使用  若果有模板  会跟着模板来渲染
+            template:"<div>{{test}}</div>",
+            // 初始化实例之后会自动调用beforeCreate函数
+            beforeCreate:function() {
+                console.log("beforeCreate");   
+            },
+            created:function(){
+                console.log("created");
+            },
+            // beforeMopunt执行的时候还没有渲染页面
+            beforeMount:function(){
+                console.log(this.$el);
+                console.log("brforeMount");
+            },
+            // mounted执行的时候页面已经渲染
+            // 执行页面挂在
+            mounted:function(){
+                console.log(this.$el);
+                console.log("mounted");
+            },
+            // 控制台运行vm.$destroy()  之后会执行后面的beforeDestroy和destroyed函数
+            beforeDestroy:function(){
+                console.log("boforeDistroy");
+            },
+            destroyed:function(){
+                console.log("destroyed");
+            },
+            // 可以在控制台进行数据改变，这样可以运行beforeUpdate 和 update函数
+            beforeUpdate:function(){
+                console.log("beforeUpdate");
+            },
+            updated:function(){
+                console.log("updated");
+            }
+        })
+    </script>
+</body>
+</html>

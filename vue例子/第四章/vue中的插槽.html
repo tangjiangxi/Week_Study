@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>vue中的插槽使用</title>
+</head>
+<body>
+    <div id="app">
+        <child>
+            <!-- 插槽只能有一个 而具名插槽可以有多个 具名插槽也是可以有默认值的-->
+            <!-- 这里是一个插槽   可以使用插槽向自主键传递内容-->
+            <p>dell</p>
+        </child>
+        <!-- <child content='<p>tangjiangxi</p>'></child> -->
+        <body-content>
+            <!-- 具名插槽  给插槽定义一个名字 当在插入的时候按名字插入就可以在相应的位置插入相应的插槽 -->
+            <div class="header" slot="header">header</div>
+            <div class="footer" slot="footer">footer</div>
+        </body-content>
+    </div>
+    <script>
+        Vue.component('child',{
+            // props:['content'],
+            // template:'<div>\
+            //         <p>hello</p>\
+            //         <div v-html="this.content"></div>\
+            //         </div>'
+            template:'<div>\
+                <p>hello</p>\
+                <slot>默认内容</slot>\   //如果插槽没有内容  这里默认内容会显示\
+                </div>'
+        })
+        Vue.component('body-content',{
+            template:'<div>\
+                    <slot name="header"></slot>\
+                    <div class="content">content</div>\
+                    <slot name="footer"></slot>\
+                    <slot name="default"><h1>这里是默认值当没有传入插槽的时候</h1></slot>\
+                    </div>'
+        })
+        var vm=new Vue({
+            el:'#app'
+        })
+    </script>
+</body>
+</html>

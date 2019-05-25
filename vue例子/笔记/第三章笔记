@@ -1,0 +1,9 @@
+生命周期？
+生命周期就是Vue实例在某个时间点会自动执行的函数 
+在某个时间点  会自动的执行生命周期函数  函数放在实例里面   一共有11个生命周期函数  这里讲解了8个
+beforeCreate  createed beforemount mounted  beforeDestroy destroyed 
+beforeUpdate updated(activated deactivated errorCaptured)
+-----------------------------------------------------------------------------------------
+
+
+

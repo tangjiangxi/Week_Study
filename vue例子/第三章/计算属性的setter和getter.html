@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        {{fullName}}
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                firstName:'jiangxi',
+                lastName:'tang'
+            },
+            computed:{
+                fullName:{
+                    // 当读取的时候会调用get方法
+                    get:function(){
+                    return this.firstName+" "+this.lastName
+                    },
+                    // 设置的时候会调用改方法    控制台 vm.fullname="tangjiangxi"
+                    set:function(value){
+                        // 把value以空格分割成数组  赋值给arr
+                        var arr=value.split(" ");
+                        this.firstName=arr[0];
+                        this.lastName=arr[1];
+                        console.log(value);
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

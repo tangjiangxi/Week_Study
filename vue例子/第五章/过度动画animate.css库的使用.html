@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="../第五章/animate.css">
+    <!-- <style>
+        @keyframes bounce-in{
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        /* 显示过程中一直存在 */
+        .fade-enter-active{
+            transform-origin: left center;
+            animation: bounce-in 1s;
+        }
+        /* 隐藏的过程中一直存在 */
+        .fade-leave-active{
+            transform-origin: left center;
+            animation: bounce-in 1s;
+        }
+    </style> -->
+</head>
+<body>
+    <div id="app">
+        <!-- 利用transition标签包裹表示拥有动画效果 -->
+        <!-- 类名是可以自定义的  enter-active="类名" -->
+        <transition name="fade"
+            enter-active-class="animated swing"
+            leave-active-class="animated shake"    
+        >
+            <div v-if='show'>hello world</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+    </div>
+    <script>
+        var vm=new Vue({
+            el:'#app',
+            data:{
+                show:true
+            },
+            methods:{
+                handleClick:function(){
+                    this.show=!this.show
+                }
+            }
+        })
+    </script>
+</body>
+</html>

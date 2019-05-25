@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <title>非父子主键之间的传值（Bus/总线/发布订阅模式/观察者模式）</title>
+</head>
+<body>
+    <div id="app">
+        <child content="tang"></child>
+        <child content="jiangxi"></child>
+    </div>
+    <script>
+        // 在vue类上挂了一个bus属性
+        Vue.prototype.bus=new Vue()
+        Vue.component('child',{
+            props:{
+                content:String
+            },
+            data:function(){
+                return{
+                    selfcontent:this.content
+                }
+            },
+            template:'<div @click="handleClick">{{selfcontent}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.bus.$emit('change',this.selfcontent)
+                }
+            },
+            // 页面挂载
+            mounted:function(){
+                var this_=this
+                this.bus.$on('change',function(msg){
+                    this_.selfcontent=msg
+                })
+            }
+        })
+        var vm=new Vue({
+            el:'#app',
+        })
+    </script>
+</body>
+</html>
