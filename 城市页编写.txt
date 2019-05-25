@@ -1,0 +1,42 @@
+router/index.js 配置路径，显示目录下的内容
+
+      path: '/city',
+      name: 'City',
+      component: City
+-------------------------------------
+vue 中的路由
+
+    <router-link to="/city">
+        <div class="header_right">
+            {{this.city}}
+            <span class="iconfont arrow_icon">&#xe673;</span>
+        </div>
+    </router-link>
+
+<router-link>标签包裹，当点击的时候进行跳转to="/city"  to路径下
+
+从新回顾下inconfont的使用
+
+ref传递dom元素 使用方法(他可以帮助我们获取dom)
+<div ref="dom"></div>
+使用的时候$refs['dom']
+
+
+简单伸缩布局的语法
+        display flex
+        flex-direction column  （设置方向）
+        justify-content center
+
+
+better-scroll的使用
+利用better-scroll完成城市选择页
+解决问题overflow hidden设置的城市列表是无法拖动的
+better-scroll这个包是iscroll的封装
+使用方法：在github上面有具体的使用方法
+安装包npm install better-scroll --save
+
+
+
+
+
+
