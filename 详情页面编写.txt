@@ -1,0 +1,54 @@
+全局事件解绑
+当我们使用keepalive（页面缓存）
+我们组件会多出个actived生命周期函数  它在每次页面展示的时候会执行
+与之对应的还有一个生命周期函数deacitived  它页面被隐藏或页面被替换的时候会被执行
+    activated(){
+        window.addEventListener('scroll',this.handleScroll)
+    },
+    deactivated(){
+        window.removeEventListener('scroll',this.handleScroll)
+    }
+-------------------------------------------------------------------------
+递归组件的使用
+数据
+list:[{
+                title:'成人票',
+                children:[{
+                    title:'成人三管售票',
+                    children:[{
+                        title:'成人三管售票-某一连锁售票'
+                    }]
+                },{
+                    title:'成人五管售票'
+                }]
+            },{
+                title:'学生票'
+            },{
+                title:'儿童票'
+            },{
+                title:'特惠票'
+            }]
+
+
+        <div class="item" v-for="(item,index) of list" :key="index">
+            <div class="item_title  border-bottom">
+                <span class="iconfont item_title_icon">&#xe658;</span>
+                {{item.title}}
+            </div>
+            <div v-if="item.children" class="item_children">
+                <detail-list :list=item.children></detail-list>
+            </div>
+        </div>
+
+利用本机ip地址访问运行项目
+packge.json文件中配置
+ --host 0.0.0.0
+"dev": "webpack-dev-server --host 0.0.0.0 --inline --progress --config build/webpack.dev.conf.js", 
+
+
+当在手机上测试出现白屏的时候  需要安装一个包
+npm install babel-polyfill --save
+原因是手机安卓版本比较底
+
+npm run build
+webpack 打包

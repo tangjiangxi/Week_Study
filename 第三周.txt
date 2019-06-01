@@ -1,0 +1,16 @@
+跟着视频教程完成模拟简约版去哪儿app开发  完善城市页，编写详情界面
+学习使用vuex进行全局数据管理 
+大致图像流程
+components--（Dispatch）-->actions--(commit)-->Mutations--(mutate)-->states--(Render)-->components（这是一个单向数据流）
+使用：
+安装 npm install vuex save 
+了解vue路由
+路由编程式导航
+this.$router.push('/')
+
+回顾js高程 14 16 17 20 21 章节  重点回顾21章节(ajax与comet)   
+学习es6第8章第9章
+
+
+
+ 

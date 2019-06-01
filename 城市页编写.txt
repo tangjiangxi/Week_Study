@@ -37,6 +37,24 @@ better-scroll这个包是iscroll的封装
 
 
 
+vuex（官方推荐的数据框架）
+如果两个页面存在通用信息的通信  但有不存在组件间的关系  这个时候就会用到vuex
+当我们多个页面进行数据传值非常困难的时候  我们可以把一些公用的数据放在一个公共的存储空间
+这个时候我们使用的vuex就会起到很好的效果
+--------------------------------------------------------------------
+公用数据都存放在state中 如果组件（component）想使用公共数据，直接调用就可了
+如何改变数据 先调用actions做一些异步处理或则做一些同步操作 actions再去调用mutations 
+只有通过mutations才可以改变states中的值
+
+大致图像流程
+components--（Dispatch）-->actions--(commit)-->Mutations--(mutate)-->states--(Render)-->components（这是一个单向数据流）
+使用：
+安装 npm install vuex --save
 
 
+路由
+编程式导航
+this.$router.push('/')
+
+localStorage
 
