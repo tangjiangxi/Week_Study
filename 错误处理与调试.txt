@@ -1,0 +1,56 @@
+try{ 可能错误的代码。。。 }catch（error）{ 用于错误处理的代码 }  与java中的处理完全相同
+finally {  }字句一经使用，无论如何都会执行  不管有无错误
+
+错误类型
+Error  基类型，其他错误类型都继承自该类型
+EvalError 使用eval（）函数的时候发生异常抛出
+RangeError 数值超出范围
+TypeError 类型报错
+
+
+抛出错误
+throw操作符  
+throw new TypeError("错误") 
+自定义错误类型
+function ErrorOwn(){
+
+}
+ErrorOwn.prototype=new Error();
+throw new ErrprOwn();
+
+javascript是松散类型的    一般关注三种错误
+①类型转换cuowu
+②数据类型错误
+③通信错误  （ajax编写  与任何服务器通讯的时候都可能发生）
+
+致命错误与非致命错误
+致命错误：
+	应用程序更本没法运行
+	错误明显影响到用户的主要操作
+	会导致其他连带错误
+非致命错误：
+	不影响用户的主要任务
+	只影响页面的一部分
+	可以恢复的
+	重复相同的操作
+可以把错误记录到服务器  但是注意要表明是前端错误   这是为了方管理
+
+简单的调试
+使用代码向控制台输出消息   console(输出信息)
+cosole对象方法
+	error(message)  错误消息记录到控制台
+	info（message） 将信息性消息纪律到控制台
+	log(message)  将一般消息记录到控制台
+	warn（message）将警告消息记录到控制台
+
+可以自定义输出区块，用来显示提示信息  显示爱当前页面
+
+抛出异常
+自定义错误  通常使用assert（）函数抛出
+
+function assert(condition,message){
+	if(!condition){
+		throw new Error(mesage)
+	}
+}
+

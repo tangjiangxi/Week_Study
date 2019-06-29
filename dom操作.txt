@@ -1,0 +1,39 @@
+Dom
+操作节点
+appendChild() 向列表的末尾添加一个节点
+insertBefore() 插入后成为第一个节点    可以传入两个参数  把第一个参数插入第二个参数的前面
+replaceChild() 替换节点   接受两个参数
+removeChild() 移除节点
+
+查找元素
+javascript通过Document表示文档  document对象是window对象的一个属性
+查找元素
+使用document对象的几个方法来实现
+getElementById("元素id")  使用元素id来获取元素节点
+getElementByTagName("元素标签名") 通过元素标签名来获取
+getElementByName("name") 返回给定name属性的元素节点集合 
+
+元素属性的操作方法
+获取   getAttribute()  传入属性参数
+设置   setAttribute()	传入属性参数  以及设置值的参数
+移除	removeAttribute()  传入属性参数 
+
+创建节点
+createTextNode()
+穿件文本节点
+createTextNode("hello world")
+
+
+Dom扩展
+querySelector()  接受css选择符，返回与该模式匹配的第一个元素
+querySelectorAll()  接受css选择符，返回的是与该模式匹配的所有元素 
+getElementsbyClassName() 使用类名获取元素
+为每个元素添加classList属性
+classList属性 操作类class属性方法
+div.classList.add(value) 加
+		contains(value) 是否包含
+		remove(value)  移除
+		toggole(value) 有则删除 没则加
+innerHTML  返回调用元素的所有子节点
+outerHTML  fanhu
+innerText 属性 操作元素中所有的文本内容	

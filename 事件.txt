@@ -1,0 +1,102 @@
+事件流描述的是从页面接受事件的顺序
+
+时间冒泡：事件有具体的元素接受，然后逐级向上传播到较为不具体的节点
+div->body->html->document（简单例子）
+
+事件捕获：事件捕获的思想是不太具体的节点更早的接受事件，而具体的节点应该最后接受事件
+document->html->body->div
+
+dom事件流包括三个阶段：时间捕获，处于目标阶段和时间冒泡
+事件是指用户或者浏览器自身执行的某种页面动作  如点击事件 鼠标移动事件等
+
+触发事件的方法 以点击事件作分析
+以点击事件为主，做方法总结
+① <input type="button" value="click me" onclick="alert(event.target.value)">
+② 为元素绑定事件    btn.onclick=function(){ } 事件函数
+③ addEventListerner()  三个参数  第一个事件类型（不需要加on   如click） 第二个事件函数 第三个Boolean值（true为捕获，false为冒泡）
+	btn.addEventListerner("click",function(){},true)
+移除事件remoceEventListener()   移除时事件的是需要注意 使用匿名函数编写的事件函数  即使在移除时编写一样 也达不到移除的效果
+
+IE事件处理程序
+添加事件
+attachEvent（）  移除事件detachEvent（）在attachEvent的方法情况下，事件处理程序会在全局中运行，所以this指向的是window
+它所接受的第一个参数需要加on   如onclick
+
+跨浏览器的时间处理程序 
+方法判断  封装
+
+------------------------------------------------------------
+事件对象：当触发事件时，会产生一个事件对象event，这个对象包含与所有时间相关的信息
+event.type  事件类型
+event.target 事件目标
+组织事件的默认行为  event.PreventDefault()
+stopPropagation()方法用于立即停止时间在Dom层次中的传播  即取消进一步的时间捕获和事件冒泡
+event.eventPhase 的值可以判断事件当前处于哪一个阶段  1 捕获  2处于目标对象上 3处于冒泡阶段
+
+IE中的事件对象
+ie中event作为window对象的一个属性存在  所以要通过window.event来获取时间对象
+window.event.type  ie事件类型
+window.event.srcElement 事件目标
+		cancelBubble  false取消时间冒泡
+		returnValue   ture取消默认事件
+
+跨浏览器的时间对象
+封装好
+
+
+
+事件类型
+load事件  面业加载完成后触发window上面的load事件
+unload事件 文档被完全卸载后触发
+resize事件 窗口宽高发生改变的时候 会触发
+scroll事件 滚动事件
+
+焦点事件
+blur 元素失去焦点的时候触发（不冒泡）
+focus 元素获取焦点的时候触发（不冒泡）
+focusIn 元素获取焦点的时候触发 （冒泡）
+focusIn 元素失去焦点触发 （冒泡）
+
+当焦点从页面的一个元素移动到另外一个元素  依次触发事件
+①focusout 失去焦点元素触发
+②focusin 在获取焦点触发
+③blur 在失去焦点上触发
+④DOMFocusOut 在失去焦点上触发
+⑤focus 在获得焦点上触发
+⑥DOMFocusIn 在获取焦点上触发
+
+
+鼠标与滚轮事件
+click 单击事件
+dbclick 双击事件
+mosuedown 按下任意鼠标按钮触发
+mousenter 鼠标光标进入触发
+mousleave 鼠标光标移动到元素之外触发
+mousemove 在元素内部移动会触发
+mouseup 用户鼠标按钮释放的时候触发
+
+
+鼠标位置 
+浏览器视口
+坐标  (clientX,clientY)
+页面位置 
+坐标 （pageX,pageY）
+当页面没有滚动时候  这两个位置相等  若发生滚动
+pageX=clientX+scrollLeft
+PageY=clientY+scrollTop
+相对于屏幕位置
+（screenX,screenY）
+
+
+------------------------
+添加事件过多，即使不会导致什么问题，但是会影响页面加载的性能。
+事件委托
+事件委托利用冒泡，只指定一个事件处理程序，就可以管理某一类型的所有事件
+事件单击的元素在dom树尽量高一点的地方
+
+事件委托的优点
+①整个页面占用内存空间更少，能够提升整体性能
+②在页面设置事件处理程序的时候所需要的时间更少，只添加一个事件处理程序所需要dom的应用更少，所花时间更少。
+
+移除事件处理程序
+在删除dom节点的时候，绑定事件是没法删除的  ，需要手工删除  让其等于null  有时候也需要在unload的时候进行删除（这是事件委托排上用场，他能够进行更少的事件删除）

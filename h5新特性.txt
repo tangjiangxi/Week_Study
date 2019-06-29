@@ -1,0 +1,8 @@
+媒体元素
+插入视频 video
+插入音频 redio
+两个元素共有属性：autoplay 是否自动播放
+		  paused 表示播放器是否暂停
+方法play() pause()  控制播放暂停
+Audio类型  
+var audio=new Audio("sound.mp3");
