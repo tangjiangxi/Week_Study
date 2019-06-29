@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+          height: 1500px;  
+          width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <input list="users"/>
+    <div id="progress"></div>
+    <time datatime='2018-01-01'>今天元旦</time>
+
+    <datalist id='users'>
+        <option>Jamse</option>
+        <option>Jack</option>
+        <option>Mary</option>
+    </datalist>
+    <input type="button" value="登录" id="btn">
+    <script src="../js/index.js"></script>
+</body>
+<script>
+    var btn=document.getElementById("btn");
+    // 这是函数声明 注意 不能放在    EventUtil.addHandler(btn,"click",handler); 的后面
+    var handler=function(event){
+        console.log("nihao");
+        event=EventUtil.getEvent()
+        var target=EventUtil.getTarget(event);
+        alert(target.id)
+    }
+    EventUtil.addHandler(btn,"click",handler);
+    // 面页加载完毕后执行onload事件
+    window.onload=function(){
+        alert("load事件");
+    }
+    // 滚动事件 
+    EventUtil.addHandler(window,"scroll",function(){
+        console.log(document.body.scrollTop);
+    });
+
+    // 数据交互
+    var merchantType1="全部商家";
+    var xhr=AjaxC.createXHL();
+    xhr.onreadystatechange=function(){
+	if(xhr.readyState==4){
+		if((xhr.status>=200&&xhr.status<300)||xhr.status==304){
+        		console.log(xhr.responseText);
+    		}else{
+        		alert("request was unsuccessful:"+xhr.status)
+   		    }
+	    }	
+    }
+    xhr.onprogress=function(event){
+        event=EventUtil.getEvent();
+        var progress=document.getElementById("progress");
+        if(event.lengthComputable){
+            progress.innerHTML="received"+event.postion+"of"+event.totalSize+"bytes";
+        }
+    };
+    var url=AjaxC.addURLParam("http://47.107.80.17:8080/take-out/page/getMerchant","merchantType",merchantType1)
+
+    xhr.open("get",url,false);
+    xhr.send();
+    if((xhr.status>=200&&xhr.status<300)||xhr.status==304){
+        console.log(xhr.responseText);
+    }else{
+        alert("request was unsuccessful:"+xhr.status)
+    }
+</script> 
+</html>
+

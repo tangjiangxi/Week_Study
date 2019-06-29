@@ -1,0 +1,225 @@
+json与javascript的对象自变量对比
+json没有申明变量 其末尾没有分号 对象属性必须加引号
+对象字面量
+var object={
+	name:"tangjiangxi",
+	age:"99"
+};
+json文件
+{
+	"name":"tangjiangxi",
+	"age":"99"
+}
+json与数组
+{
+	"name":"tangjiangxi",
+	"love":["basketball","swim","javascript"]
+}
+
+--------------------------------------
+解析与序列化
+主要的两个方法
+stringify()  把javascript对象序列化为json字符串  默认情况下，Json.stringify输出的字符串不包含任何空格字符串  
+var detail={
+	name:"tangjiangxi",
+	age:"99"
+};
+var detaiText=Json.stringify(detail);
+{"name","tangjiangxi","age","99"}
+
+parse()  把json字符串解析为原生的JavaScript值  
+var detail=Json.parse(detailText);
+
+序列化选项
+过滤操作
+stringify()可以接受两个参数
+Json.stringify(detail,["name"])  只返回拥有name属性的值
+第二个参数还可以是函数，进行写函数操作的过滤
+还可以传入第三个参数
+Json.stringify(detail,nukk,4)  控制结果的缩进和空白字符
+
+
+解析选项
+parse() 也可以接受两个参数  第二个参数是接受函数  函数传入（key,value）参数，进行相应的操作
+var bookCopy=Json.parse(jsonText,function(key,value){ })
+------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ajax与comet
+ajax的技术核心，XMLHttpRequest对象
+创建XmlHttpRequest对象
+var xhr=new XMLHttpRequest();
+
+浏览器兼容
+封装好了  调用
+
+var xhr= Ajaxc.createXHR();
+
+在使用XHR对象的时候，需要调用open方法，它接受三参数（请求类型，请求url,是否异步请求 ture是 false否）
+调用open方法并不是真正的发送一个请求，而是启动一个请求以备发送。
+xhr.open("get","http://47.107.80.17:8080/take-out/page/getDish",false)
+
+要发送特定的请求，调用方法send
+xhr.send()  可以接受一个参数作为请求主题发送的数据
+
+发送请求之后，等待服务器响应  响应后会自动填充xhr的属性 
+相关属性
+responseText  作为响应主题被返回的文本
+responseXML  包含数据的的xml dom 文档
+status  响应的http状态
+statusText  http状态的说明
+
+接受状态后 第一步检查status属性，确定响应是否成功返回。
+状态码 200  作为成功的标志，304 表示请求的资源没有被修改
+
+发送异步请求的时候，可以检测xhr对象的readyState属性，属性表示请求/响应过程的当前活动阶段。
+0 未初始化 尚未调用open（）
+1 启动 已经调用open() 但尚未滴哦用send（）
+2 发送 调用send()方法  但为收到响应
+3 接受 已经收到部分响应
+4 完成 已经收到全部数据响应
+
+每当readyState属性的值发生改变，就会调用一次redaystatecahnge事件 可以利用该事件来检测每次状态变化后readyState的值
+一般对于4的阶段检测
+xhr.onreadystatechange=function(){
+	if（xhr.readyState==4）{
+		if((xhr.status>=200&&xhr.status<300)||xhr.status==304){
+        		console.log(xhr.responseText);
+    		}else{
+        		alert("request was unsuccessful:"+xhr.status)
+   		 }
+	}	
+}
+注意，必须在open（）之前指定onreadystatechange事件处理才能确保跨浏览器兼容性
+
+xhr.abort()取消异步请求
+
+-----------------------------------------------------------------------------------------------
+
+
+
+http头部信息
+请求头部 
+setRequestHeader（"MyHeader","Myvalue"）  设置请求信息
+响应头部
+getRespomseHeader("MyHeader")  获取响应信息
+
+
+请求方式   get 与 post
+get请求
+是最常见的请求类型，常用于向服务器查询某些信息，必要时可以将查询支付串参数追加到url的末尾，一遍将信息发送到服务器。
+查询字符串追加的名称和值必须使用encodeURIComponent()进行编码，才能放在url的末尾。 所有的名-值对必须有号（&）分隔。
+方法写入封装类里面了
+
+post请求
+使用频率仅次于post请求，通常用于向服务器发送应该被保存的数据。
+post请求把数据作为主体提交
+xhr.send(data)
+
+Fordata类型
+表单数据序列化，创建表单格式的相同数据
+创建FormData对象，并向其添加数据
+var data=new FormData();
+data.append("name","nicholas");  append方法接受连个参数，键和值
+
+
+向FormData传入表单数据
+var data=newFormData(document.forms[0]);
+xhr.send(data)
+
+
+超时设定
+timeout属性  ie8支持   
+xhr.timeout=1000 ；  1000毫秒之内没有返回结果，就会自动终止
+
+进度时间
+progress时间
+onprogress事件处理程序会接受一个event对象，其target属性是xhr对象，但其包含额外的三个属性
+lengthComputable   表示进度信息是否可用的布尔值
+position  已经接受的字节数
+totalSize  根据Content-Length响应头部的预期字节数。
+    xhr.onprogress=function(event){
+        alert("nihao")
+        event=EventUtil.getEvent();
+        var progress=document.getElementById("progress");
+        if(event.lengthComputable){
+            progress.innerHTML="received"+event.postion+"of"+event.totalSize+"bytes";
+     }
+};
+
+
+跨域资源共享（CORS）
+背后思路：使用http头部让浏览器与服务器进行沟通，从而决定请求或响应是应该成功还是失败。
+如使用get或则post发送请求时候，会给他附加一个Origin头部。
+Orgin：http//www.23123.net
+如果服务器认为这个请求可以接受，就在Access-Control-Allow-Origin头部回发相同的资源信息
+Access-Control-Allow-Origin：http//www.23123.net
+（这里在编写vue项目的时候遇到过问题，实现跨域需要进行一些配置）
+
+
+ie对cors的实现
+创建一个XDomaninRequest的实例，调用open（）方法，在调用send（）  
+open方法只有两个参数，因为它的所有请求都是异步请求，第三个参数就显得没有必要
+请求返回之后，会触发load事件，响应的诗句会保存在responseText中。
+如果请求失败，会出发error事件
+xdr也支撑timeout属性与ontimeout事件
+可以设置contentType属性来表示发送数据的属性
+
+var xdr=new XdomainRequest();
+xdr.onload=function(){
+	alert(xdr.responseText);
+};
+xdr.onerror=function(){
+	alert("unsuccessful");
+}
+xdr.timeout=1000;
+xdr.ontimeout=function（）{
+	alert("超时");
+}
+xdr.open("get","http://www.1234.com")
+xdr.send(null);
+xdr.contentType="application/X-WWW-form-urlencoded"
+xdr.abort("name=value&name2=value2");终止请求
+
+其他浏览器的跨域对cors的实现
+无需填写额外的代码既可以触发跨域行为。 要请求另外一个域的资源，使用标准的XHR对象，并在open方法中传入url即可
+
+
+其他跨域请求
+图像ping
+使用<img>标签,
+创建一个Image实例，调用onload和onerror事件，它能知道响应是什么时候收来的。
+
+jsonp(填充Json或者参数JSON)
+JSNP由两部分组成：
+回调函数和数据。
+回调函数就是当响应到来时，应该在页面调用的函数，数据就是传入回调函数的数据。   
+
+
+comet
+指的是更高级的ajax技术（服务器推送）
+ajax是一种从页面向服务器请求数据的技术，而从comet是一种服务器向页面推送数据的技术。
+comet能够让数据近乎实时的推送到页面上，非常适合体育分数和股票的报价
+实现方式，长轮询和流
+长轮询  ①定时向服务器发送请求，看数据有没有更新
+        ②页面发起一个请求，然后服务器一直保持连接打开，直到有数据可以发送，
+	发送完数据虎，浏览器关闭请求，随即又发送一个发哦服务器请求。
+流  浏览器向服务器发送一个请求  服务器一直开启的，周期性的向浏览器发送信息。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
