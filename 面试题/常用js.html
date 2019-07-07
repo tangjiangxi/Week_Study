@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        p{
+            color: blue;
+        }
+    </style>
+    <script src="./js/index.js"></script>
+</head>
+<body>
+    <p>test1 简单实现倒计时  距离2020-3-12 00:00还有？</p>
+    <div id="date"></div>
+
+
+    <p>test2 判断一年是否是闰年</p>
+    <div>
+        <input type="text" id="Iptyear">
+        <button id="btn">判断</button>
+        <span id="msg"></span>
+    </div>
+
+
+    <p>test3 计算两个日期的天数</p>
+    <span>开始日期</span><input type="text" id="start"><br>
+    <span>结束日期</span><input type="text" id="end"><br>
+    <button id="btn1">计算</button>
+    <span>两者相差</span>
+    <span id="timemsg"></span>
+
+
+    <p>test4</p>
+</body>
+<script>
+   //倒计时 
+    var end=new Date("2020-3-12 00:00");
+    function countdown(){
+        var now=new Date();
+        var day,hour,minute,second,str;
+        var redmian=end-now;
+        if(redmian<0){
+            alert(时间已过期);
+            return;
+        }
+        day=Math.floor(redmian/1000/60/60/24);
+        hour=Math.floor(redmian/1000/60%24);
+        minute=Math.floor(redmian/1000/60%60);
+        second=Math.floor(redmian/1000%60);
+        str=day+"天"+hour+"小时"+minute+"分钟"+second+"秒";
+        document.getElementById("date").innerHTML=str;
+        setTimeout(countdown,1000);
+    }
+    countdown();
+
+    // 判断一年是否是闰年
+   
+    var btn=document.getElementById("btn");
+    btn.onclick=function(){
+        var Iptyear=document.getElementById("Iptyear").value;
+        var msg=document.getElementById("msg");
+        var Iptyear1=parseInt(Iptyear);
+        if(new Date(Iptyear1,2,0).getDate()==29){
+            msg.innerHTML="是闰年";
+        }else{
+            msg.innerHTML="不是闰年"
+        }
+    }
+
+    //计算两个日期的天数 
+    // 有些问题
+    var btn1=document.getElementById("btn1");
+    btn1.onclick=function(){
+        var start3=document.getElementById("start").value;
+        var end3=document.getElementById("end").value;
+        var start_3=new Date(start3);        
+        var end_3=new Date(end3);
+        var diff=Math.abs(end_3-start_3),//取绝对值
+            days=Math.ceil(diff/1000/60/60/24);//向上取整
+        var timemsg_3=document.getElementById("timemsg"),
+            str_3=days+"day";
+        timemsg_3.innerText=str_3;
+    }
+
+    var arr=[1,2,3,4,5],result;
+    var result=arr.reduce(function(accumulator,current,index,array){
+        return accumulator+current;
+    })
+    console.log(result);    
+</script>
+</html>

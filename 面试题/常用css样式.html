@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        p{
+            color: blue;
+        }
+        /* 当超出的时候设置为省略号 */
+        /* 先合并为一行  超出的隐藏  超出类容用...替换*/
+        .test1{
+            width: 100px;
+            white-space: nowrap; 
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        /* 用css设置一个三角形 */
+        .test2{
+            width: 0;
+            height: 0;
+            border: 100px solid transparent;
+            border-bottom-color:red; 
+        }
+        .test3{
+            width: 100px;
+            height: 100px;
+            background-color: yellow;
+            border-radius:100%; 
+        }
+        .test4{
+            width: 100px;
+            height: 100px;
+            box-shadow: 0 0 0 4px #cccccc;
+        }
+        .test5{
+            width: 300px;
+            height: 300px;
+            background: url("./imgs/test5.png");
+            /* conteain可以保证宽高比例一致放入盒子中 */
+            background-size:100% 100%;
+            /* 这里设置100%相当于cover */
+            /* 精灵图定位 */
+            /* background-position: 20px 20px; */
+        }   
+        .test6{
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            animation: pm-popup-ant 2s .5s ease-in-out infinite;
+        }
+        @keyframes pm-popup-ant {
+            20%{  transform: scale(.8) translateX(30px);}
+            40%{  transform: scale(1.2) translateY(30px);}
+            60%{  transform: scale(.9) translateX(60px);}
+            80%{  transform: scale(1) translateY(60px);}
+            100%{  transform: scale(1);}
+        }
+    </style>
+</head>
+<body>
+    <p>test1 设置超出文本部分用...代替</p>
+    <div class="test1">如何在内容过多的时候将超出部分替换为省略号</div>
+    <p>test2 用css制作三角形</p>
+    <div class="test2"></div>
+    <p>test3 将一个正方形设置为圆形</p>
+    <div class="test3"></div>
+    <p>test4 不使用border来得到边框 （阴影来设置的）</p>
+    <div class="test4"></div>
+    <p>test5 缩放背景图 （backgroud-size）</p>
+    <div class="test5"></div>
+    <p>test6 css动画</p>
+    <div>translate()位移函数<br>
+        scale() 缩放函数<br>
+        rotate() 旋转函数<br>
+        skew()  倾斜函数<br>
+        transition过度<br>
+        transform状态<br>
+        animation动画<br>
+        @keyframes(自定义动画)
+ 
+       
+        <div class="test6"></div>
+    </div>
+
+</body>
+</html>
