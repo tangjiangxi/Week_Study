@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>dom事件模型指的就是冒泡和捕获</h1>
+    <h2>添加事件的方法</h2>
+    <span>
+        1.dom.onclick=function(){}   (dom0) <br>
+        2.dom.addEventLister("click",function(){},false) (dom2)  ie是attachEvent <br>
+        3.dom.addEventLister("keyup",function(){},false) (dom3)
+    </span>
+    <h2>事件模型  捕获和冒泡  事件流</h2>
+    <span>捕获 目标阶段 冒泡</span>
+    <h2>描述dom事件捕获的流程</h2>
+    <span>
+        第一个接受的是window document html body 。。 冒泡元素
+    </span>
+    <h2>event对象</h2>
+    <span>
+        1.event.preentDefalut() 组织默认事件<br>
+        2.event.stopPropagation() 阻止冒泡的行为<br>
+        3.event.stopImmediatePropagation() 注册两个事件，在一个事件中添加这个的话，可以阻止另外一个事件的执行<br>
+        4.event.currentTarget()  <br>
+        5.evvent.tartget <br>
+            代理事件的时候会考擦4，5，target表示的是当前被点击的元素。cuurrent.Rarget指定的是当前绑定事件的元素
+    </span>
+    <h2>自定义事件</h2>
+    <span>
+        var eve=new Event（"custom"）;<br>
+        dom.addEvnetLister("custon",function(){ })
+    </span>
+</body>
+</html>

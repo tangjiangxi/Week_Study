@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+            height: 1000px;
+            background: blue;
+            margin: 0;
+            padding: 0;
+        }
+        body .stiky{
+            position: sticky;
+            top: 20px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="stiky">
+    </div>
+    <script>
+        function quick(arr){
+            if(arr.length<=1){
+                return arr;
+            }
+            var left = [];
+            var right = [];
+            var base = arr[0];
+            for(var i=1;i<arr.length;i++)
+            {
+            // 判决条件
+                if(arr[i]>base){
+                right.push(arr[i]);
+                }else {
+                left.push(arr[i])
+                }
+            }
+            // 关键理解这里
+            return quick(left).concat(base,quick(right));
+        }    
+        console.log(quick([3,2,0,1]));
+    </script>
+</body>
+</html>

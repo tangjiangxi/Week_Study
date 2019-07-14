@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html *{
+            motion: 0;
+            padding: 0; 
+        }     
+    </style>
+</head>
+<body>
+    <!-- bfc垂直方向编剧重叠的问题 -->
+    <section id="margin">
+        <!-- 边距重叠取值规则   取最大值 -->
+        <style>
+            #margin{
+                background: pinl;
+                overflow: hidden;
+            }
+            #margin>p{
+                margin: 5px auto 25px;
+                background: red;
+            }
+        </style>
+        <p>1</p>
+        <div style="overflow:hidden;">
+            <p>2</p>
+        </div>
+        <p>3</p>
+    </section>
+
+    <!-- bfc不与float重叠 -->
+    <section id="layout">
+        <style>
+            #layout{
+                background: red;
+            }
+            #layout .left{
+                float: left;
+                width: 100px;
+                height: 100px;
+                background: pink;
+            }
+            #layout .right{
+                height: 110px;
+                background: #ccc;
+                overflow: auto;
+            }
+        </style>
+        <div class="left"></div>
+        <div class="right"></div>
+    </section>
+
+    <!-- bfc即使是float也会参与高度计算  因为设置float的时候会脱离标准流 这样的话会计算不了高度 -->
+    <section id="float">
+        <!-- 浮动子元素参与计算 -->
+        <style>
+            #float{
+                background:red;
+                /* 创建bfc  清楚浮动 */
+                /* overflow: auto; */
+                float: left;
+            }
+            #float .float{
+                float: left;
+                font-size: 30px;
+            }
+        </style>
+        <div class="float">
+            我是浮动元素
+        </div>
+    </section>
+</body>
+</html>

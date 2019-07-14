@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>什么是Doctype及其作用</h2>
+    <span>
+        文档类型定义，浏览器知道后利用对应的引擎进行渲染,dtd告诉浏览器渲染机制<br>
+        doctype的写法<br>
+        html5中 <!DOCTYPE html>  <br>
+        html4.01 严格模式 strict   <br>
+        HTML4.01 宽松模式 Transition
+    </span>
+    <h2>渲染机制</h2>
+    <span>
+        html Parser转成dom tree
+        css Parser转成css tree
+        Attachment把两者结合 形参render tree
+        layout 就显示节点真正显示的位置
+        painting  浏览器开始画图
+        display 能看到的整个效果
+    </span>
+    <h2>重排 reflow</h2>
+    <span>
+        dom 结构中的各个元素都有自己的盒子，这些需要根据各种样式来计算并根据结果将元素放在它改出现的位子，整个过程叫做重排
+    </span>
+    <h2>触发重排 reflow</h2>
+    <span>
+        进行一些dom节点操作<br>
+        修改css样式<br>
+        修改网页默认字体
+    </span>
+    <h2>重绘 repaint</h2>
+    <span>
+        当各个盒子大小，位子，以及其他属性，例如颜色，字体大小都确定了之后，浏览器于是吧元素都按照各自的特性绘制一遍，于是页面内容就出现了
+        这个过程就叫做重绘。
+    </span>
+    <h2>重绘触发条件</h2>
+    <span>
+        dom改动<br>
+        css改动
+    </span>
+</body>
+</html>

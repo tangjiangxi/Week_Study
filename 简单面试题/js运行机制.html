@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h2>js的运行机制</h2>
+    <span>
+        js是单线程的，js在同一时间只能做一件事 <br>
+        js分同步任务和异步任务<br>
+        任务队列 分为同步队列与异步队列<br>
+        先执行同步任务，在执行异步任务<br>
+        在执行同步认为的时候任何的异步队列是不会运行部的<br>
+    </span>
+    <h2>异步任务</h2>
+    <span>
+        setTimeout setInterval   <br>
+        dom事件<br>
+        es6中的promise
+    </span>
+    <script>
+        // 延时操作   js是单线程的  js在同一时间只能做一件事  
+        console.log(1);
+        // 异步任务
+        setTimeout(() => {
+            console.log(3);
+        },0);
+        console.log(2);
+
+        // while同步人物一直在执行，在这里不会输出B 只会输出A
+        // console.log("A");
+        // while(true){
+            
+        // }
+        // console.log("B");
+        
+        for(var a=0;a<4;a++){
+            setTimeout(function(){
+                console.log(a);
+            },0);
+        }
+    </script>
+</body>
+</html>
